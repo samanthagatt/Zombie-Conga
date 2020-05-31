@@ -13,6 +13,7 @@
 		D68B2A482483F31900EB0D3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D68B2A462483F31900EB0D3A /* Main.storyboard */; };
 		D68B2A4A2483F31D00EB0D3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D68B2A492483F31D00EB0D3A /* Assets.xcassets */; };
 		D68B2A4D2483F31D00EB0D3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D68B2A4B2483F31D00EB0D3A /* LaunchScreen.storyboard */; };
+		D68B2A552484147400EB0D3A /* ExponentOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68B2A542484147300EB0D3A /* ExponentOperators.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		D68B2A492483F31D00EB0D3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D68B2A4C2483F31D00EB0D3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D68B2A4E2483F31D00EB0D3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D68B2A542484147300EB0D3A /* ExponentOperators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExponentOperators.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				D68B2A3C2483F31900EB0D3A /* AppDelegate.swift */,
+				D68B2A542484147300EB0D3A /* ExponentOperators.swift */,
 				D68B2A422483F31900EB0D3A /* GameScene.swift */,
 				D68B2A442483F31900EB0D3A /* GameViewController.swift */,
 				D68B2A462483F31900EB0D3A /* Main.storyboard */,
@@ -140,6 +143,7 @@
 			files = (
 				D68B2A432483F31900EB0D3A /* GameScene.swift in Sources */,
 				D68B2A452483F31900EB0D3A /* GameViewController.swift in Sources */,
+				D68B2A552484147400EB0D3A /* ExponentOperators.swift in Sources */,
 				D68B2A3D2483F31900EB0D3A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
