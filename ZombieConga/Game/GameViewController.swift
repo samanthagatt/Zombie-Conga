@@ -18,6 +18,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // Size of iPad resolution (excluding the 12.9" and 10.5" Pro)
+        // Size of the background images
         let size = CGSize(width: 2048, height: 1536)
         let scene = GameScene(size: size)
         

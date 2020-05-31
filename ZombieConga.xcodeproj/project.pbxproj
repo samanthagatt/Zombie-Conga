@@ -39,6 +39,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D64795C0248447A400CA07B3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D68B2A542484147300EB0D3A /* ExponentOperators.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		D64795C1248447B700CA07B3 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				D68B2A422483F31900EB0D3A /* GameScene.swift */,
+				D68B2A442483F31900EB0D3A /* GameViewController.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
 		D68B2A302483F31800EB0D3A = {
 			isa = PBXGroup;
 			children = (
@@ -59,9 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				D68B2A3C2483F31900EB0D3A /* AppDelegate.swift */,
-				D68B2A542484147300EB0D3A /* ExponentOperators.swift */,
-				D68B2A422483F31900EB0D3A /* GameScene.swift */,
-				D68B2A442483F31900EB0D3A /* GameViewController.swift */,
+				D64795C0248447A400CA07B3 /* Utils */,
+				D64795C1248447B700CA07B3 /* Game */,
 				D68B2A462483F31900EB0D3A /* Main.storyboard */,
 				D68B2A492483F31D00EB0D3A /* Assets.xcassets */,
 				D68B2A4B2483F31D00EB0D3A /* LaunchScreen.storyboard */,

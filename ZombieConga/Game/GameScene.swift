@@ -68,6 +68,7 @@ class GameScene: SKScene {
         
         moveZombie()
         boundsCheckZombie()
+        rotateZombie()
     }
     
     /// Move zombie according to time elapsed since last move
@@ -118,6 +119,11 @@ class GameScene: SKScene {
             zombie.position.y = topRight.y
             velocity.y = -velocity.y
         }
+    }
+    private func rotateZombie() {
+        // calculates arctan of (velocity.y / velocity.x)
+        zombie.zRotation = atan2(velocity.y, velocity.x)
+        // Don't have to rotate it any more since zombie faces the left (0°)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
