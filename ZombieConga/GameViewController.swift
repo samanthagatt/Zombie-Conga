@@ -12,38 +12,25 @@ import GameplayKit
 
 class GameViewController: UIViewController {
 
+    @IBOutlet var skView: SKView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
-            
-            view.ignoresSiblingOrder = true
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
-        }
+        // Size of iPad resolution (excluding the 12.9" and 10.5" Pro)
+        let size = CGSize(width: 2048, height: 1536)
+        let scene = GameScene(size: size)
+        
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        skView.ignoresSiblingOrder = true
+        // Scales scene so it fits on device and then cuts off the whatever's outside device frame
+        // Will only be scaled _up_ for 12.9" and 10.5" iPad Pro
+        scene.scaleMode = .aspectFill
+        
+        skView.presentScene(scene)
     }
-
-    override var shouldAutorotate: Bool {
-        return true
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
-    }
-
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
