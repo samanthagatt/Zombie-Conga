@@ -11,6 +11,8 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    var zombie = SKSpriteNode(imageNamed: "zombie1")
+    
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.black
         let background = SKSpriteNode(imageNamed: "background1")
@@ -25,5 +27,9 @@ class GameScene: SKScene {
         // Makes sure background is always drawn first
         background.zPosition = -1
         addChild(background)
+        
+        zombie.position = CGPoint(x: 400, y: 400)
+        zombie.setScale(2)
+        addChild(zombie)
     }
 }
