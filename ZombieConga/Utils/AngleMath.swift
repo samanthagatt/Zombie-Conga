@@ -10,11 +10,8 @@ import Foundation
 import CoreGraphics
 
 prefix operator |
-prefix func | <T: BinaryInteger>(int: T) -> T {
-    T.init(int.magnitude)
-}
-prefix func | <T: BinaryFloatingPoint>(float: T) -> T {
-    T.init(float.magnitude)
+prefix func | <T>(lhs: T) -> T where T: Comparable, T: SignedNumeric {
+    abs(lhs)
 }
 
 // For aesthetic
@@ -22,16 +19,14 @@ postfix operator |
 postfix func | <T: BinaryInteger>(int: T) -> T { int }
 postfix func | <T: BinaryFloatingPoint>(float: T) -> T { float }
 
-let π: CGFloat = .pi
-func shortestAngle(between angle1: CGFloat,
-                   and angle2: CGFloat) -> CGFloat {
-    /// Difference between angle2 and angle1 (making sure it's not over 360°)
-    var angle = (angle2 - angle1).truncatingRemainder(dividingBy: 2*π)
-    if angle >= π { angle -= π }
-    if angle <= -π { angle += 2*π }
-    return angle
-}
-
 extension CGFloat {
     var isNegative: Bool { self < 0 }
+    func shortestAngle(to otherAngle: CGFloat) -> CGFloat {
+        /// Difference between `self` and `otherAngle` (making sure it's not over 360°)
+        var shortest = (otherAngle - self).truncatingRemainder(dividingBy: .pi*2)
+        if shortest >= .pi { shortest -= .pi }
+        if shortest <= -.pi { shortest += .pi*2 }
+        return shortest
+    }
+
 }

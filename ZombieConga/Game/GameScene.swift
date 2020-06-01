@@ -19,7 +19,7 @@ class GameScene: SKScene {
     /// How far a zombie should go (in points) after one second
     private var zombieMovePointsPerSec: CGFloat = 480.0
     /// How far a zombie should rotate (in radians) after one second
-    private var zombieRotationRadsPerSec: CGFloat = 4*π
+    private var zombieRotationRadsPerSec: CGFloat = .pi*4
     /// The last TimeInterval update(_:) was called
     private var lastUpdate: TimeInterval = 0
     /// Change in time since last time update(_:) was called (how long it's been in seconds)
@@ -54,6 +54,8 @@ class GameScene: SKScene {
         for child in nodes {
             addChild(child)
         }
+        
+        spawnEnemy()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -113,14 +115,40 @@ class GameScene: SKScene {
         }
     }
     /// Rotates zombie so he's facing the correct direction
+    ///
+    /// Mostly it works but sometimes the shortest angle makes him go backwards
+    /// (I've only seen it happen when he bounces off the bottom playable edge).
+    /// Also one time I saw it spin in a circle (way less frequent than going backwards)
+    /// Once I changed | prefix operator from using magnitude and then converting it back
+    /// into its original type, to instead using abs(_:), I haven't seen any bugs
     private func rotateZombie() {
-        let shortest = shortestAngle(between: zombie.zRotation, and: velocity.angle)
+        let shortest = zombie.zRotation.shortestAngle(to: velocity.angle)
         var radsToRotate = zombieRotationRadsPerSec * dt
         if |shortest| < radsToRotate {
             radsToRotate = |shortest|
         }
         radsToRotate = shortest.isNegative ? -radsToRotate : radsToRotate
         zombie.zRotation += radsToRotate
+    }
+    
+    private func spawnEnemy() {
+        let enemy = SKSpriteNode(imageNamed: "enemy")
+        let halfEnemyWidth = enemy.size.width / 2
+        let halfEnemyHeight = enemy.size.height / 2
+        enemy.position = CGPoint(x: size.width + halfEnemyWidth,
+                                 y: size.height / 2)
+        addChild(enemy)
+        /// Front of enemy (left side) is at middle of sceen and
+        /// body of enemy is at bottom of playable area
+        let midLocation = CGPoint(x: size.width / 2 + halfEnemyWidth,
+                                  y: playableRect.minY + halfEnemyHeight)
+        let midMoveAction: SKAction = .move(to: midLocation, duration: 1)
+        let endLocation = CGPoint(x: -halfEnemyWidth, y: enemy.position.y)
+        let moveAction: SKAction = .move(to: endLocation, duration: 1)
+        let log: SKAction = .run { print("Reached bottom!") }
+        let wait: SKAction = .wait(forDuration: 0.25)
+        let sequence: SKAction = .sequence([midMoveAction, log, wait, moveAction])
+        enemy.run(sequence)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

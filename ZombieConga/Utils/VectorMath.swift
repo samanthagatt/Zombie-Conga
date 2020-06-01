@@ -33,7 +33,7 @@ func *= (lhs: inout CGPoint, rhs: CGPoint) {
     lhs = lhs * rhs
 }
 
-// Multiplying a vector by a scalar
+// Multiplying a vector by a scalar (Scaling the vector)
 func * (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
     return CGPoint(x: lhs.x * rhs, y: lhs.y * rhs)
 }
