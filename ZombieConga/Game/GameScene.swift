@@ -11,7 +11,11 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    private var zombie = SKSpriteNode(imageNamed: "zombie1")
+    private var zombie: SKSpriteNode = {
+        let node = SKSpriteNode(imageNamed: "zombie1")
+        node.position = CGPoint(x: 400, y: 400)
+        return node
+    }()
     /// How far a zombie should go in one second
     private var zombieMovePointsPerSec: CGFloat = 480.0
     /// The last TimeInterval update(_:) was called
@@ -20,25 +24,14 @@ class GameScene: SKScene {
     private var dt: CGFloat = 0
     /// Directional speed of sprite in points/sec to move towards a location
     private var velocity: CGPoint = .zero
-    private var playableRect: CGRect = .zero
-    
-    override init(size: CGSize) {
-        super.init(size: size)
-        setupPlayableRect()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupPlayableRect()
-    }
-    
-    private func setupPlayableRect() {
-        /// Largest aspect ratio of Apple devices (iPhone X)
+    /// The rect where the zombie can move
+    private lazy var playableRect: CGRect = {
+        /// Highest ratio of Apple devices (iPhone X and up)
         let maxRatio: CGFloat = 2.16
         let playableHeight = size.width / maxRatio
         let margin = (size.height - playableHeight) / 2
-        playableRect = CGRect(x: 0, y: margin, width: size.width, height: playableHeight)
-    }
+        return CGRect(x: 0, y: margin, width: size.width, height: playableHeight)
+    }()
     
     // Setup
     override func didMove(to view: SKView) {
@@ -50,16 +43,15 @@ class GameScene: SKScene {
         background.position = .zero
         // Makes sure background is always drawn first
         background.zPosition = -1
-        addChild(background)
-        
-        zombie.position = CGPoint(x: 400, y: 400)
-        
-        addChild(zombie)
         
         let shape = SKShapeNode(rect: playableRect)
         shape.strokeColor = SKColor.red
         shape.lineWidth = 4
-        addChild(shape)
+        
+        let nodes: [SKNode] = [background, zombie, shape]
+        for child in nodes {
+            addChild(child)
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -73,10 +65,8 @@ class GameScene: SKScene {
     
     /// Move zombie according to time elapsed since last move
     private func moveZombie() {
-        let distance = CGPoint(x: velocity.x * dt,
-                               y: velocity.y * dt)
+        let distance = velocity * dt
         zombie.position += distance
-        
     }
     
     /// Calculates new velocity toward the new location and updates `velocity`
@@ -84,14 +74,17 @@ class GameScene: SKScene {
     private func updateZombieVelocity(toward location: CGPoint) {
         /// Total distance from sprite to location
         let offset = location - zombie.position
-        /// Length of `offset` vector using Pythagorean Theorem
-        let offsetLength = CGFloat(sqrt(Double(offset.x** + offset.y**)))
-        // Normalize the vector so it's a unit vector (has a length of 1)
-        let offsetUnit = CGPoint(x: offset.x / offsetLength,
-                                 y: offset.y / offsetLength)
-        
-        velocity = offsetUnit * zombieMovePointsPerSec
+        velocity = offset.unitVector * zombieMovePointsPerSec
     }
+    /// Calculates new velocity toward the first touch and updates `velocity`
+    /// - note: Uses `updateZombieVelocity(toward location:)`
+    /// - parameter touches: The set of user touches. Only the first touch will be used.
+    private func updateZombieVelocity(on touches: Set<UITouch>) {
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: self)
+        updateZombieVelocity(toward: location)
+    }
+    /// Makes sure zombie isn't out of bounds, and bounces him off the edge if he is
     private func boundsCheckZombie() {
         let bottomLeft: CGPoint = CGPoint(x: 0, y: playableRect.minY)
         let topRight = CGPoint(x: size.width, y: playableRect.maxY)
@@ -117,20 +110,16 @@ class GameScene: SKScene {
             velocity.y = -velocity.y
         }
     }
+    /// Rotates zombie so he's facing the correct direction
     private func rotateZombie() {
-        // calculates arctan of (velocity.y / velocity.x)
         zombie.zRotation = velocity.angle
-        // Don't have to rotate it any more since zombie faces the left (0°)
+        // Don't have to rotate it any more since zombie faces the right (0°) by default
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let location = touch.location(in: self)
-        updateZombieVelocity(toward: location)
+        updateZombieVelocity(on: touches)
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let location = touch.location(in: self)
-        updateZombieVelocity(toward: location)
+        updateZombieVelocity(on: touches)
     }
 }

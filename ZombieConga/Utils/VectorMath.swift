@@ -58,9 +58,10 @@ func /= (lhs: inout CGPoint, rhs: CGFloat) {
 }
 
 extension CGPoint {
+    /// Angle of vector (arctan of y/x)
     var angle: CGFloat { atan2(y, x) }
+    /// Length of vector (Pythagorean Theorem)
     var length: CGFloat { sqrt(x** + y**) }
-    func normalized() -> CGPoint {
-        self / length
-    }
+    /// The vector normalized into a single unit (length of 1)
+    var unitVector: CGPoint { self / length }
 }
