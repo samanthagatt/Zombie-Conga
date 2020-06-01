@@ -16,11 +16,13 @@ class GameScene: SKScene {
         node.position = CGPoint(x: 400, y: 400)
         return node
     }()
-    /// How far a zombie should go in one second
+    /// How far a zombie should go (in points) after one second
     private var zombieMovePointsPerSec: CGFloat = 480.0
+    /// How far a zombie should rotate (in radians) after one second
+    private var zombieRotationRadsPerSec: CGFloat = 4*π
     /// The last TimeInterval update(_:) was called
     private var lastUpdate: TimeInterval = 0
-    /// Change in time since last time update(_:) was called (how long it's been)
+    /// Change in time since last time update(_:) was called (how long it's been in seconds)
     private var dt: CGFloat = 0
     /// Directional speed of sprite in points/sec to move towards a location
     private var velocity: CGPoint = .zero
@@ -112,8 +114,13 @@ class GameScene: SKScene {
     }
     /// Rotates zombie so he's facing the correct direction
     private func rotateZombie() {
-        zombie.zRotation = velocity.angle
-        // Don't have to rotate it any more since zombie faces the right (0°) by default
+        let shortest = shortestAngle(between: zombie.zRotation, and: velocity.angle)
+        var radsToRotate = zombieRotationRadsPerSec * dt
+        if |shortest| < radsToRotate {
+            radsToRotate = |shortest|
+        }
+        radsToRotate = shortest.isNegative ? -radsToRotate : radsToRotate
+        zombie.zRotation += radsToRotate
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
