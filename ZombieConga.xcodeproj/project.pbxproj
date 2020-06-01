@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D64795C52484481D00CA07B3 /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64795C42484481D00CA07B3 /* VectorMath.swift */; };
 		D68B2A3D2483F31900EB0D3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68B2A3C2483F31900EB0D3A /* AppDelegate.swift */; };
 		D68B2A432483F31900EB0D3A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68B2A422483F31900EB0D3A /* GameScene.swift */; };
 		D68B2A452483F31900EB0D3A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68B2A442483F31900EB0D3A /* GameViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D64795C42484481D00CA07B3 /* VectorMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
 		D68B2A392483F31800EB0D3A /* ZombieConga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZombieConga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D68B2A3C2483F31900EB0D3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D68B2A422483F31900EB0D3A /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -43,6 +45,7 @@
 			isa = PBXGroup;
 			children = (
 				D68B2A542484147300EB0D3A /* ExponentOperators.swift */,
+				D64795C42484481D00CA07B3 /* VectorMath.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -158,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D68B2A432483F31900EB0D3A /* GameScene.swift in Sources */,
+				D64795C52484481D00CA07B3 /* VectorMath.swift in Sources */,
 				D68B2A452483F31900EB0D3A /* GameViewController.swift in Sources */,
 				D68B2A552484147400EB0D3A /* ExponentOperators.swift in Sources */,
 				D68B2A3D2483F31900EB0D3A /* AppDelegate.swift in Sources */,

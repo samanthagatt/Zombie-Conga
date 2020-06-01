@@ -8,11 +8,11 @@
 
 import Foundation
 
-precedencegroup Exponentiative {
+precedencegroup ExponentiationPrecedence {
   associativity: left
   higherThan: MultiplicationPrecedence
 }
-infix operator ** : Exponentiative
+infix operator ** : ExponentiationPrecedence
 func ** <T: BinaryInteger>(lhs: T, rhs: T) -> T {
     T.self(pow(Double(lhs), Double(rhs)))
 }
@@ -22,21 +22,23 @@ func ** <T: BinaryFloatingPoint>(lhs: T, rhs: T) -> T {
 
 
 postfix operator **
-postfix func ** <T: BinaryInteger>(number: T) -> T {
-    T.self(number * number)
+postfix func ** <T: BinaryInteger>(int: T) -> T {
+    T.self(int * int)
 }
-postfix func ** <T: BinaryFloatingPoint>(number: T) -> T {
-    T.self(number * number)
+postfix func ** <T: BinaryFloatingPoint>(float: T) -> T {
+    T.self(float * float)
 }
 
-precedencegroup ExponentiativeAssignment {
+precedencegroup ExponentiationAssignment {
   associativity: right
   higherThan: MultiplicationPrecedence
 }
-infix operator **= : ExponentiativeAssignment
+infix operator **= : ExponentiationAssignment
 func **= <T: BinaryInteger>(lhs: inout T, rhs: T) {
     lhs = lhs ** rhs
 }
 func **= <T: BinaryFloatingPoint>(lhs: inout T, rhs: T) {
     lhs = lhs ** rhs
 }
+
+

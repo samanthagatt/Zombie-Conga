@@ -75,8 +75,7 @@ class GameScene: SKScene {
     private func moveZombie() {
         let distance = CGPoint(x: velocity.x * dt,
                                y: velocity.y * dt)
-        zombie.position = CGPoint(x: zombie.position.x + distance.x,
-                                  y: zombie.position.y + distance.y)
+        zombie.position += distance
         
     }
     
@@ -84,16 +83,14 @@ class GameScene: SKScene {
     /// - parameter location: Where you want the zombie to move toward
     private func updateZombieVelocity(toward location: CGPoint) {
         /// Total distance from sprite to location
-        let offset = CGPoint(x: location.x - zombie.position.x,
-                             y: location.y - zombie.position.y)
+        let offset = location - zombie.position
         /// Length of `offset` vector using Pythagorean Theorem
         let offsetLength = CGFloat(sqrt(Double(offset.x** + offset.y**)))
         // Normalize the vector so it's a unit vector (has a length of 1)
         let offsetUnit = CGPoint(x: offset.x / offsetLength,
                                  y: offset.y / offsetLength)
         
-        velocity = CGPoint(x: offsetUnit.x * zombieMovePointsPerSec,
-                               y: offsetUnit.y * zombieMovePointsPerSec)
+        velocity = offsetUnit * zombieMovePointsPerSec
     }
     private func boundsCheckZombie() {
         let bottomLeft: CGPoint = CGPoint(x: 0, y: playableRect.minY)
@@ -122,7 +119,7 @@ class GameScene: SKScene {
     }
     private func rotateZombie() {
         // calculates arctan of (velocity.y / velocity.x)
-        zombie.zRotation = atan2(velocity.y, velocity.x)
+        zombie.zRotation = velocity.angle
         // Don't have to rotate it any more since zombie faces the left (0°)
     }
     
